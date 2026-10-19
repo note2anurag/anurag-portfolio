@@ -9,3 +9,15 @@
 /* Contact section */
 .contact-section{border-top:1px solid var(--line);padding:75px 0 90px;display:grid;grid-template-columns:1fr .8fr;gap:70px;align-items:center}.contact-section h2{font:500 clamp(34px,4vw,49px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-2px;margin:17px 0}.contact-section p{max-width:460px;color:var(--muted);font-size:13px;line-height:1.9}.contact-links{border-top:1px solid var(--line)}.contact-links a{display:grid;grid-template-columns:62px 1fr 18px;gap:10px;align-items:center;padding:21px 0;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}.contact-links a span{font:10px 'DM Mono',monospace;color:var(--muted);text-transform:uppercase}.contact-links a strong{font-size:13px;font-weight:500;overflow-wrap:anywhere}.contact-links a svg{color:var(--accent)}.contact-links a:hover strong{color:var(--accent)}.story-aside .text-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-top:10px;color:var(--text);text-decoration:none}.story-body a{color:var(--accent);text-underline-offset:3px}
 @media(max-width:650px){.contact-section{grid-template-columns:1fr;gap:28px;padding:55px 0 65px}.contact-links a{grid-template-columns:52px 1fr 18px}.contact-links a strong{font-size:12px}}
+.markdown-body .mermaid {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.markdown-body .mermaid svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}

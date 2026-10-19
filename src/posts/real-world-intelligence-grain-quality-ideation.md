@@ -1,12 +1,9 @@
+
 ---
 category: AI Engineering
 date: 2026-09-23
-excerpt: An ideation-stage investigation into how grain-quality data,
-  machine learning, domain rules, and market feedback might form a
-  decision-support system for farmers---without prematurely choosing a
-  model or promising outcomes.
-title: From Grain Quality to Real-World Intelligence: Framing the
-  Problem Before the Model
+excerpt: "An ideation-stage investigation into how grain-quality data, machine learning, domain rules, and market feedback might form a decision-support system for farmers, without prematurely choosing a model or promising outcomes."
+title: "From Grain Quality to Real-World Intelligence: Framing the Problem Before the Model"
 ---
 
 # From Grain Quality to Real-World Intelligence: Framing the Problem Before the Model

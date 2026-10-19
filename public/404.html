@@ -1,1 +1,10 @@
-
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Redirecting…</title><script>
+  // GitHub Pages fallback for client-side routes, including project pages.
+  var parts = location.pathname.split("/").filter(Boolean);
+  var known = ["must-read", "passions", "story"];
+  var isUserSiteRoute = parts.length === 0 || known.indexOf(parts[0]) !== -1;
+  var base = isUserSiteRoute ? "/" : "/" + parts[0] + "/";
+  var path = isUserSiteRoute ? location.pathname.replace(/^\//, "") : parts.slice(1).join("/");
+  location.replace(base + "?p=" + encodeURIComponent(path + location.search) + location.hash);
+</script></head><body>Redirecting…</body></html>

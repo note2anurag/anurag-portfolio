@@ -1,9 +1,32 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Code2, Heart, Menu, Moon, Sun, X } from "lucide-react";
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
+import mermaid from "mermaid";
 
 type Page = "home" | "must-read" | "passions" | "story";
 type Post = { slug: string; title: string; date: string; category: string; excerpt: string; content: string };
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+const articleRenderer = new Renderer();
+const defaultCodeRenderer = articleRenderer.code.bind(articleRenderer);
+
+articleRenderer.code = (token) => {
+  const language = token.lang?.trim().split(/\s+/)[0].toLowerCase();
+
+  if (language === "mermaid") {
+    return `<div class="mermaid">${escapeHtml(token.text)}</div>\n`;
+  }
+
+  return defaultCodeRenderer(token);
+};
 
 const postFiles = import.meta.glob("./posts/*.md", { eager: true, query: "?raw", import: "default" }) as Record<string, string>;
 const posts: Post[] = Object.entries(postFiles).map(([path, raw]) => {
@@ -94,7 +117,7 @@ function App() {
 
     <main>
       {route.page === "home" && <Home navigate={navigate} openPost={openPost} />}
-      {route.page === "must-read" && (selectedPost ? <Article post={selectedPost} back={() => navigate("must-read")} /> : <section className="page-section">
+      {route.page === "must-read" && (selectedPost ? <Article post={selectedPost} back={() => navigate("must-read")} theme={theme} /> : <section className="page-section">
         <div className="eyebrow"><BookOpen size={14}/> THE READING ROOM</div>
         <h1 className="page-title">Must <span className="accent">Read.</span></h1>
         <p className="page-intro">Ideas worth keeping. Notes from things I build, things I learn, and things I can't stop thinking about. This is where all my writing lives.</p>
@@ -162,7 +185,75 @@ function Home({ navigate, openPost }: { navigate: (p: Page) => void; openPost: (
     </section>
   </div>;
 }
+function Article({
+  post,
+  back,
+  theme
+}: {
+  post: Post;
+  back: () => void;
+  theme: "light" | "dark";
+}) {
+  const bodyRef = useRef<HTMLDivElement>(null);
 
+  const html = useMemo(
+    () => marked.parse(post.content, { renderer: articleRenderer }) as string,
+    [post.content]
+  );
+
+  useEffect(() => {
+    const container = bodyRef.current;
+    if (!container) return;
+
+    // Restore the original Markdown HTML before rendering diagrams.
+    container.innerHTML = html;
+
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      theme: theme === "dark" ? "dark" : "default"
+    });
+
+    const diagrams = container.querySelectorAll<HTMLElement>(".mermaid");
+
+    if (diagrams.length > 0) {
+      void mermaid.run({ nodes: diagrams }).catch((error) => {
+        console.error("Failed to render Mermaid diagram:", error);
+      });
+    }
+  }, [html, theme]);
+
+  return (
+    <article className="article-page">
+      <button className="back-link" onClick={back}>
+        <ArrowLeft size={15} /> All writing
+      </button>
+
+      <div className="eyebrow">
+        {post.category.toUpperCase()} <span className="meta-divider">/</span>{" "}
+        {post.date}
+      </div>
+
+      <h1 className="article-title">{post.title}</h1>
+      <p className="article-deck">{post.excerpt}</p>
+      <div className="article-rule"></div>
+
+      <div
+        ref={bodyRef}
+        className="markdown-body"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+
+      <div className="article-end">
+        <span className="accent">✳</span>
+        <p>Thanks for reading.</p>
+        <button className="text-link" onClick={back}>
+          Back to Must Read <ArrowRight size={15} />
+        </button>
+      </div>
+    </article>
+  );
+}
 function PostRow({ post, index, onClick }: { post: Post; index: number; onClick: () => void }) {
   return <button className="post-row" onClick={onClick}>
     <span className="post-number">{String(index + 1).padStart(2, "0")}</span>
@@ -170,17 +261,8 @@ function PostRow({ post, index, onClick }: { post: Post; index: number; onClick:
     <span className="post-date">{post.date}</span><span className="post-arrow"><ArrowUpRight size={18}/></span>
   </button>;
 }
-function Article({ post, back }: { post: Post; back: () => void }) {
-  const html = marked.parse(post.content) as string;
-  return <article className="article-page">
-    <button className="back-link" onClick={back}><ArrowLeft size={15}/> All writing</button>
-    <div className="eyebrow">{post.category.toUpperCase()} <span className="meta-divider">/</span> {post.date}</div>
-    <h1 className="article-title">{post.title}</h1><p className="article-deck">{post.excerpt}</p>
-    <div className="article-rule"></div>
-    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
-    <div className="article-end"><span className="accent">✳</span><p>Thanks for reading.</p><button className="text-link" onClick={back}>Back to Must Read <ArrowRight size={15}/></button></div>
-  </article>;
-}
+
+
 function Passions() {
   const items = [
     { n: "01", title: "Farming: patience, seasons, and foundations", tag: "THE CULTIVATOR", desc: "I am a farmer, and that part of my life is more than a label. Farming asks you to respect foundations, notice small changes, work with uncertainty, and understand that meaningful results take time. I see a parallel in software: cultivate the conditions for healthy growth, keep tending the details, and don't confuse activity with progress.", icon: <Heart size={20}/> },

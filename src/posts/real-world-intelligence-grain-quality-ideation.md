@@ -1,4 +1,3 @@
-
 ---
 category: AI Engineering
 date: 2026-09-23

@@ -30,8 +30,16 @@ articleRenderer.code = (token) => {
 
 const postFiles = import.meta.glob("./posts/*.md", { eager: true, query: "?raw", import: "default" }) as Record<string, string>;
 const posts: Post[] = Object.entries(postFiles).map(([path, raw]) => {
-  const meta = Object.fromEntries([...raw.matchAll(/^([a-zA-Z]+):\s*(.+)$/gm)].map(m => [m[1].toLowerCase(), m[2].trim()]));
-  const content = raw.replace(/^---[\s\S]*?---\s*/, "");
+  
+const meta = Object.fromEntries(
+  [...raw.matchAll(/^([a-zA-Z]+):\s*(.+)$/gm)].map(m => [
+    m[1].toLowerCase(),
+    m[2].trim()
+  ])
+);
+
+const content = raw.replace(/^---[ \t]*\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/, "");
+
   return {
     slug: path.split("/").pop()!.replace(/\.md$/, ""),
     title: meta.title ?? "Untitled post",

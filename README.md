@@ -1,87 +1,139 @@
-# Anurag Gautam — Personal Portfolio
+Anurag Gautam — Personal Portfolio
 
-A complete, responsive personal portfolio built with React, TypeScript, and Vite. It presents Anurag's journey through farming, professional cricket, and software engineering, with a Markdown-powered technical writing archive. The site supports light/dark themes and is configured for GitHub Pages.
+A responsive personal portfolio and technical writing archive built with React, TypeScript, and Vite. The site presents Anurag's engineering approach, personal journey, interests, and technical writing, with light/dark themes and GitHub Pages deployment.
 
-## Pages and content
+Live site: https://note2anurag.github.io/anurag-portfolio/
 
-- **Home** — personal positioning, selected writing, the farming/cricket/software mindset, and direct contact links.
-- **Must Read** — the single archive for all technical and personal essays, with search and category filters. Each article has its own route.
-- **Passions** — farming, professional cricket, technology, travel, sport, and deep technical learning.
-- **My Story** — the journey from professional cricket into software engineering, selected experience across Cisco and Microsoft projects, engineering principles, and contact details.
+About this portfolio
 
-The content is populated. There are no biography prompts or starter-post placeholders. The articles are original portfolio essays based on the experiences and technical interests shared by Anurag; review them for personal voice and factual accuracy before publishing.
+The portfolio is built around three ideas:
 
-## Run locally
+- Engineering: Application architecture, frontend development, enterprise workflows, integrations, testing, reliability, and AI-enabled capabilities.
+- The person behind the work: A personal journey shaped by family responsibilities, education, competitive cricket, self-directed learning, and a transition into software engineering.
+- Technical writing: A single archive for articles and explanations about engineering decisions, debugging, architecture, and technology.
 
-Requires Node.js 20 or later and npm.
+Pages
 
-```bash
+- Home — Engineering positioning, a short introduction, recent writing, and contact details.
+- Must Read — A searchable, category-filtered archive of Markdown articles. Each article has its own route.
+- Passions — Cricket, technology, travel, sport, technical learning, and an interest in exploring AI applications in agriculture.
+- My Story — Personal background, the transition into software, engineering interests, working principles, and future learning directions.
+
+Technology stack
+
+- React
+- TypeScript
+- Vite
+- Lucide React icons
+- Marked for Markdown rendering
+- Mermaid for diagrams embedded in articles
+- CSS custom properties for light and dark themes
+- GitHub Actions and GitHub Pages for deployment
+
+Run locally
+
+Requirements: Node.js 20 or later and npm.
+
+Clone the repository:
+
+git clone https://github.com/note2anurag/anurag-portfolio.git
+cd anurag-portfolio
+
+Install dependencies:
+
 npm install
+
+Start the development server:
+
 npm run dev
-```
 
-Create a production build and preview it locally:
+Create a production build:
 
-```bash
 npm run build
+
+Preview the production build:
+
 npm run preview
-```
 
-## Add or edit a writing post
+Add or edit a writing article
 
-Create a Markdown file inside `src/posts/`. Example:
+Create a Markdown file inside "src/posts/", for example "src/posts/my-engineering-notes.md".
 
-```md
+Use this frontmatter format:
+
 ---
-title: "A useful title"
+title: "A useful engineering lesson"
 date: "2026-10-20"
 category: "Engineering"
-excerpt: "A concise description shown in the archive."
+excerpt: "A concise description shown in the writing archive."
 ---
 
 Write the article in Markdown.
-```
 
-Supported frontmatter fields are `title`, `date`, `category`, and `excerpt`. Use `YYYY-MM-DD` for dates. All Markdown files in `src/posts/` are included automatically at build time and appear in the same Must Read archive.
+You can include headings, lists, links, code blocks, and Mermaid diagrams.
 
-## Contact details
+Supported frontmatter fields are "title", "date", "category", and "excerpt".
 
-- Email: `note2anurag@outlook.com`
-- Phone: `+91 92627 48948`
+Use "YYYY-MM-DD" for dates. The application loads Markdown files from "src/posts/" at build time and includes them in the Must Read archive.
 
-These details are intentionally public in the site because they were explicitly provided for this purpose. Remove or change them in `src/App.tsx` if that changes.
+Keep articles grounded in actual experience, explain technical trade-offs where useful, and distinguish completed work from experiments or future interests.
 
-## Deploy to GitHub Pages
+Project structure
 
-1. Create an empty GitHub repository, for example `anurag-portfolio`.
-2. Extract this project folder and push its contents (not an extra enclosing ZIP folder) to the repository's `main` branch.
-3. In GitHub, open **Settings → Pages** and select **GitHub Actions** as the deployment source.
-4. The workflow at `.github/workflows/deploy.yml` installs dependencies, builds the Vite app, and deploys `dist/` whenever you push to `main`. You can also start it manually from **Actions** using **Run workflow**.
-5. Wait for the workflow to finish. The published URL will appear in the deployment job and under **Settings → Pages**.
+anurag-portfolio/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── public/
+│   ├── 404.html
+│   └── .nojekyll
+├── src/
+│   ├── posts/
+│   │   └── *.md
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── styles.css
+├── index.html
+├── package.json
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 
-The Vite configuration sets the base path to `/<repository-name>/` during GitHub Actions builds, which suits a normal project repository. For a user/organisation site whose repository is named `USERNAME.github.io`, change `vite.config.ts` to `base: "/"` before deploying. The included `public/404.html` supports client-side routes on GitHub Pages.
+Deployment to GitHub Pages
 
-## Repository map
+The repository includes a GitHub Actions workflow at ".github/workflows/deploy.yml".
 
-```text
-src/
-  App.tsx                 Pages, navigation, and portfolio content
-  styles.css              Responsive styling and themes
-  posts/*.md              All articles in the Must Read archive
-  main.tsx                React entry point
-public/
-  404.html                GitHub Pages client-side route fallback
-  .nojekyll               Prevents Jekyll processing
-.github/workflows/
-  deploy.yml              Build and GitHub Pages deployment
-index.html                Page title and search/social metadata
-vite.config.ts            Vite configuration and Pages base path
-```
+When code is pushed to "main", the workflow:
 
-## Before publishing
+1. Checks out the repository.
+2. Sets up Node.js.
+3. Installs npm dependencies.
+4. Builds the Vite application.
+5. Uploads the "dist/" directory.
+6. Deploys the build to GitHub Pages.
 
-- Review the wording and ensure each statement reflects your preferred public story.
-- Confirm the GitHub repository name and, for a `USERNAME.github.io` repository, set the Vite base path to `/`.
-- Consider adding a GitHub profile URL or professional network profile if you want one displayed. No social profile URL has been invented.
+The workflow can also be started manually from the GitHub Actions tab.
 
-This is a static site: it does not require a backend, database, API keys, or environment secrets. Theme preference is stored in the visitor's browser.
+In repository settings, ensure Settings → Pages → Build and deployment → Source is set to GitHub Actions.
+
+The existing "vite.config.ts" derives the base path from the GitHub Actions repository name. For this repository, the project site is published under "/anurag-portfolio/". Preserve this configuration when deploying to the current URL.
+
+Contact
+
+- Email: note2anurag@outlook.com
+- Phone: +91 92627 48948
+
+These details are displayed publicly by design. Remove or update them if you no longer want them published.
+
+Editorial principles
+
+- Represent personal history accurately.
+- Distinguish professional experience from personal interests.
+- Present future ambitions as interests, not completed achievements.
+- Describe engineering work in terms of problems, decisions, trade-offs, and outcomes.
+- Prefer useful technical explanations over publishing for volume alone.
+
+---
+
+Built thoughtfully with React, TypeScript, and Vite.

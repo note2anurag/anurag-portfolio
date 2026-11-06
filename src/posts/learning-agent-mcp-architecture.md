@@ -1,8 +1,8 @@
 ---
 category: AI Engineering
 date: 2026-11-06
-excerpt: "A deep engineering case study of building an observable, modular Learning Agent MCP server with Go and PostgreSQL, covering architecture, identity, tool execution, database performance, instrumentation, and production-readiness considerations."
-title: "Engineering an Observable Learning Agent MCP Server: Architecture, Performance, and Operational Visibility"
+excerpt: A deep engineering case study of building an observable, modular Learning Agent MCP server with Go and PostgreSQL, covering architecture, identity, tool execution, database performance, instrumentation, and production-readiness considerations.
+title: Engineering an Observable Learning Agent MCP Server: Architecture, Performance, and Operational Visibility
 ---
 
 # Engineering an Observable Learning Agent MCP Server: Architecture, Performance, and Operational Visibility

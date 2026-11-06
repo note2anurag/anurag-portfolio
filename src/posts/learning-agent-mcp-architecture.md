@@ -5,8 +5,6 @@ excerpt: A deep engineering case study of building an observable, modular Learni
 title: Engineering an Observable Learning Agent MCP Server: Architecture, Performance, and Operational Visibility
 ---
 
-# Engineering an Observable Learning Agent MCP Server: Architecture, Performance, and Operational Visibility
-
 > **Series:** Building Enterprise AI Integrations with Model Context Protocol  
 > **Part 1 --- Architecture and Engineering**  
 > **Status:** Implementation and local validation completed for the described engineering work. Production behaviour, quantitative performance improvements, and deployment-specific operational metrics should be reported only where independently verified.
